@@ -1,0 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-weight: bold;
+}
+
+.board,
+.squares,
+.tiles {
+  width: 80vmin;
+  height: 80vmin;
+  position: relative;
+}
+
+.square,
+.tile {
+  position: absolute;
+}
+
+.squares {
+  background: #bbada0;
+}
+
+.square {
+  background: rgba(238, 228, 218, 0.35);
+}
+
+.tiles {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
