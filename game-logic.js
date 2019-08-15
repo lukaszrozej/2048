@@ -78,12 +78,12 @@ const emptyPositions = rows =>
     .filter(empty)
 
 const rndTile = () =>
-  Math.random() < 1
+  Math.random() < 0.9
     ? { value: 2, id: id++, mergedFrom: [] }
     : { value: 4, id: id++, mergedFrom: [] }
 
-// const rndPick = array => array[Math.floor(Math.random() * array.length)]
-const rndPick = array => array[0]
+const rndPick = array => array[Math.floor(Math.random() * array.length)]
+// const rndPick = array => array[0]
 
 const addTile = (rows, newTile, pos) =>
   rows.map((row, y) =>
@@ -119,7 +119,9 @@ const swipe = move => state => {
   const movedRows = move(clearedRows)
   const positions = emptyPositions(movedRows)
   const gameOver = positions.length === 0
-  const rows = addTile(movedRows, rndTile(), rndPick(positions))
+  const rows = gameOver
+    ? rows
+    : addTile(movedRows, rndTile(), rndPick(positions))
   const score = state.score + scoreFromMergedTiles(rows)
   return {
     rows,
