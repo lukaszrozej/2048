@@ -105,8 +105,18 @@ const scoreFromMergedTiles = rows => {
   return sum(mergedVaules)
 }
 
+const removeMergedIdsFromTile = tile =>({
+  ...tile, ...{ mergedFrom: [] }
+})
+
+const removeMergedIds = rows =>
+  rows.map(row =>
+    row.map(removeMergedIdsFromTile)
+  )
+
 const swipe = move => state => {
-  const movedRows = move(state.rows)
+  const clearedRows = removeMergedIds(state.rows)
+  const movedRows = move(clearedRows)
   const positions = emptyPositions(movedRows)
   const gameOver = positions.length === 0
   const rows = addTile(movedRows, rndTile(), rndPick(positions))
