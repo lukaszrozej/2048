@@ -38,13 +38,13 @@ const tileStyles = {
   4: { background: '#ede0c8', color: '#776e65', size: 1.0 },
   8: { background: '#f2b179', color: '#f9f6f2', size: 1.0 },
   16: { background: '#f59563', color: '#f9f6f2', size: 1.0 },
-  32: { background: '#f59563', color: '#f67c5f', size: 1.0 },
-  64: { background: '#f59563', color: '#f65e3b', size: 1.0 },
-  128: { background: '#f59563', color: '#edcf72', size: 0.82 },
-  256: { background: '#f59563', color: '#edcc61', size: 0.82 },
-  512: { background: '#f59563', color: '#edc850', size: 0.82 },
-  1024: { background: '#f59563', color: '#edc53f', size: 0.64 },
-  2048: { background: '#f59563', color: '#edc22e', size: 0.64 },
+  32: { background: '#f67c5f', color: '#f9f6f2', size: 1.0 },
+  64: { background: '#f65e3b', color: '#f9f6f2', size: 1.0 },
+  128: { background: '#edcf72', color: '#f9f6f2', size: 0.82 },
+  256: { background: '#edcc61', color: '#f9f6f2', size: 0.82 },
+  512: { background: '#edc850', color: '#f9f6f2', size: 0.82 },
+  1024: { background: '#edc53f', color: '#f9f6f2', size: 0.64 },
+  2048: { background: '#edc22e', color: '#f9f6f2', size: 0.64 },
   big: { background: '#3c3a32', color: '#f9f6f2', size: 0.55 }
 }
 
