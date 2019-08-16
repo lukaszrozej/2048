@@ -2,10 +2,17 @@ import { SIZE, empty, merged } from './game-logic.js'
 
 const $tiles = document.querySelector('.tiles')
 const $squares = document.querySelector('.squares')
-const tileSize = 20
+const boardSize = 80
+const tileSize = 0.21 * boardSize
+const offset = (boardSize - 4 * tileSize) / 5
 const fontSize = 0.51 * tileSize
 
-const dist = y => `${y * tileSize}vmin`
+$tiles.style.width = `${boardSize}vmin`
+$tiles.style.height = `${boardSize}vmin`
+$squares.style.width = `${boardSize}vmin`
+$squares.style.height = `${boardSize}vmin`
+
+const dist = y => `${offset + y * (tileSize + offset)}vmin`
 
 const setPosition = ($element, x, y) => {
   $element.style.top = dist(y)

@@ -18,8 +18,6 @@ body {
 .board,
 .squares,
 .tiles {
-  width: 80vmin;
-  height: 80vmin;
   position: relative;
 }
 
