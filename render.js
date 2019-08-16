@@ -1,5 +1,6 @@
 import { SIZE, empty, merged } from './game-logic.js'
 
+const $score = document.querySelector('.score')
 const $tiles = document.querySelector('.tiles')
 const $squares = document.querySelector('.squares')
 const boardSize = 80
@@ -82,20 +83,16 @@ const renderTile = (tile, x, y) => {
   if ($tile) return setPosition($tile, x, y)
 
   createTile(tile, x, y)
-  console.log(document.querySelectorAll('.tile'))
-  console.log(tile.mergedFrom)
   tile
     .mergedFrom
     .forEach(id => setPosition(document.getElementById(`${id}`), x, y))
 }
 
-const renderScore = () => {
-
+const renderScore = score => {
+  $score.textContent = score
 }
 
 const render = state => {
-  // console.log(state)
-  // console.log(document.querySelectorAll('.tile'))
   document.querySelectorAll('.tile').forEach($tile => {
     if (!ids(state).includes(parseInt($tile.id))) $tile.remove()
   })

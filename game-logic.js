@@ -16,7 +16,7 @@ const transpose = rows => indices(rows[0].length).map(column(rows))
 let id = 0
 
 const empty = tile => tile.empty
-const merged = tile => tile.mergedFrom
+const merged = tile => !tile.empty && tile.mergedFrom.length > 0
 const value = tile => tile.value
 
 const emptyTile = () => ({ empty: true })
@@ -105,7 +105,7 @@ const scoreFromMergedTiles = rows => {
   return sum(mergedVaules)
 }
 
-const removeMergedIdsFromTile = tile =>({
+const removeMergedIdsFromTile = tile => ({
   ...tile, ...{ mergedFrom: [] }
 })
 
@@ -114,13 +114,25 @@ const removeMergedIds = rows =>
     row.map(removeMergedIdsFromTile)
   )
 
+const equal = (tile1, tile2) =>
+  (tile1.empty && tile2.empty) || (tile1.id === tile2.id)
+
+const nothingMoved = (rows1, rows2) =>
+  indices(SIZE).every(y =>
+    indices(SIZE).every(x =>
+      equal(rows1[y][x], rows2[y][x])
+    )
+  )
+
 const swipe = move => state => {
   const clearedRows = removeMergedIds(state.rows)
   const movedRows = move(clearedRows)
+  if (nothingMoved(state.rows, movedRows)) return state
+
   const positions = emptyPositions(movedRows)
   const gameOver = positions.length === 0
   const rows = gameOver
-    ? rows
+    ? state.rows
     : addTile(movedRows, rndTile(), rndPick(positions))
   const score = state.score + scoreFromMergedTiles(rows)
   return {
@@ -130,8 +142,11 @@ const swipe = move => state => {
   }
 }
 
+const rows = indices(SIZE).map(() => indices(SIZE).map(emptyTile))
+rows[0][0] = { value: 2, id: id++, mergedFrom: [] }
+
 const initialState = {
-  rows: indices(SIZE).map(() => indices(SIZE).map(emptyTile)),
+  rows,
   gameOver: false,
   score: 0
 }
