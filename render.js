@@ -34,7 +34,7 @@ for (let x = 0; x < SIZE; x++) {
 const tileIds = tile =>
   merged(tile)
     ? tile.mergedFrom.concat(tile.id)
-    : []
+    : [tile.id]
 
 const ids = state =>
   state.rows.flatMap(row =>
@@ -61,7 +61,29 @@ const tileStyle = tile =>
     ? tileStyles[tile.value]
     : tileStyles.big
 
-const createTile = (tile, x, y) => {
+// const createTile = (tile, x, y) => {
+//   const $tile = document.createElement('div')
+//   setPosition($tile, x, y)
+//   $tile.style.width = `${tileSize}vmin`
+//   $tile.style.height = `${tileSize}vmin`
+//   $tile.id = tile.id
+//   $tile.classList.add('tile')
+
+//   const $tileInner = document.createElement('div')
+//   const { background, color, size } = tileStyle(tile)
+//   $tileInner.style.width = `${tileSize}vmin`
+//   $tileInner.style.height = `${tileSize}vmin`
+//   $tileInner.style.background = background
+//   $tileInner.style.color = color
+//   $tileInner.style.fontSize = `${size * fontSize}vmin`
+//   $tileInner.textContent = tile.value
+//   $tileInner.classList.add('tile-inner')
+
+//   $tile.appendChild($tileInner)
+//   $tiles.appendChild($tile)
+// }
+
+const createTile = (tile, x, y, type) => {
   const $tile = document.createElement('div')
   setPosition($tile, x, y)
   const { background, color, size } = tileStyle(tile)
@@ -73,6 +95,7 @@ const createTile = (tile, x, y) => {
   $tile.textContent = tile.value
   $tile.id = tile.id
   $tile.classList.add('tile')
+  $tile.classList.add(type)
   $tiles.appendChild($tile)
 }
 
@@ -80,9 +103,15 @@ const renderTile = (tile, x, y) => {
   if (empty(tile)) return
 
   const $tile = document.getElementById(tile.id)
-  if ($tile) return setPosition($tile, x, y)
+  if ($tile) {
+    $tile.classList.remove('new')
+    $tile.classList.remove('merged')
+    setPosition($tile, x, y)
+    return
+  }
 
-  createTile(tile, x, y)
+  const type = tile.mergedFrom.length > 0 ? 'merged' : 'new'
+  createTile(tile, x, y, type)
   tile
     .mergedFrom
     .forEach(id => setPosition(document.getElementById(`${id}`), x, y))
