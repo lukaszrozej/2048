@@ -3,11 +3,12 @@ import { SIZE, empty, merged } from './game-logic.js'
 const $score = document.querySelector('.score')
 const $tiles = document.querySelector('.tiles')
 const $squares = document.querySelector('.squares')
-const boardSize = 80
+const boardSize = 60
 const tileSize = 0.21 * boardSize
 const offset = (boardSize - 4 * tileSize) / 5
 const fontSize = 0.51 * tileSize
 
+document.querySelector('header').style.width = `${boardSize}vmin`
 $tiles.style.width = `${boardSize}vmin`
 $tiles.style.height = `${boardSize}vmin`
 $squares.style.width = `${boardSize}vmin`

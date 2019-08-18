@@ -8,11 +8,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="score">0</div>
+  <header>
+    <h1>2048</h1>
+    <div class="score-info">
+      <p>Score</p>
+      <p class="score">0</p>
+    </div>
+  </header>
   <div class="board">
     <div class="squares"></div>
     <div class="tiles"></div>
+    <div class="game-over">
+      <p>Game over!</p>
+    </div>
+    <div class="you-win">
+      <p>You win!</p>
+      <button class="keep-going">Keep going</button>
+    </div>
   </div>
+  <button class="new-game">New game</button>
   <script src="rxjs.umd.min.js"></script>
   <script type="module" src="game-loop.js"></script>
 </body>
