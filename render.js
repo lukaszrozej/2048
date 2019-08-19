@@ -1,5 +1,6 @@
 import { SIZE, empty, merged } from './game-logic.js'
 
+const $gameOver = document.querySelector('.game-over')
 const $score = document.querySelector('.score')
 const $tiles = document.querySelector('.tiles')
 const $squares = document.querySelector('.squares')
@@ -122,6 +123,11 @@ const renderScore = score => {
   $score.textContent = score
 }
 
+const renderGameOver = state =>
+  state.gameOver
+    ? $gameOver.classList.add('show')
+    : $gameOver.classList.remove('show')
+
 const render = state => {
   document.querySelectorAll('.tile').forEach($tile => {
     if (!ids(state).includes(parseInt($tile.id))) $tile.remove()
@@ -134,6 +140,7 @@ const render = state => {
   )
 
   renderScore(state.score)
+  renderGameOver(state)
 }
 
 export { render }

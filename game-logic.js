@@ -124,17 +124,29 @@ const nothingMoved = (rows1, rows2) =>
     )
   )
 
+const mergeable = (tile1, tile2) =>
+  !tile1.empty &&
+  !tile2.empty &&
+  tile1.value === tile2.value
+
+const nothingToMergeInRow = row =>
+  !mergeable(row[0], row[1]) &&
+  !mergeable(row[1], row[2]) &&
+  !mergeable(row[2], row[3])
+
+const nothingToMerge = rows =>
+  rows.every(nothingToMergeInRow) &&
+  transpose(rows).every(nothingToMergeInRow)
+
 const swipe = move => state => {
   const clearedRows = removeMergedIds(state.rows)
   const movedRows = move(clearedRows)
   if (nothingMoved(state.rows, movedRows)) return state
 
   const positions = emptyPositions(movedRows)
-  const gameOver = positions.length === 0
-  const rows = gameOver
-    ? state.rows
-    : addTile(movedRows, rndTile(), rndPick(positions))
+  const rows = addTile(movedRows, rndTile(), rndPick(positions))
   const score = state.score + scoreFromMergedTiles(rows)
+  const gameOver = emptyPositions(rows).length === 0 && nothingToMerge(rows)
   return {
     rows,
     gameOver,
