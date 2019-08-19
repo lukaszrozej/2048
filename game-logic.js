@@ -130,7 +130,7 @@ const mergeable = (tile1, tile2) =>
   tile1.value === tile2.value
 
 const nothingToMergeInRow = row =>
-  indices(SIZE-1).every(i => !mergeable(row[i], row[i + 1]))
+  indices(SIZE - 1).every(i => !mergeable(row[i], row[i + 1]))
 
 const nothingToMerge = rows =>
   rows.every(nothingToMergeInRow) &&
@@ -175,7 +175,7 @@ const initialState = {
 
 const newGame = () => initialState
 
-const keepGoing = state => ({ ...state, ...{ keepGoing: true }})
+const keepGoing = state => ({ ...state, ...{ keepGoing: true } })
 
 const nextState = (state, action) => action(state)
 
