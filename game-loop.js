@@ -52,7 +52,7 @@ const vectors = touchStarts.pipe(
   switchMap(p1 => touchEnds.pipe(map(vector(p1))))
 )
 
-const nonZero = v => v.x !== 0 && v.y !== 0
+const nonZero = v => v.x !== 0 || v.y !== 0
 
 const swipeFromVector = v =>
   Math.abs(v.x) >= Math.abs(v.y)
