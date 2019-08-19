@@ -1,7 +1,7 @@
 /* global rxjs */
 
 import { render } from './render.js'
-import { initialState, nextState, newGame, swipe, left, right, up, down } from './game-logic.js'
+import { initialState, nextState, newGame, keepGoing, swipe, left, right, up, down } from './game-logic.js'
 
 const { fromEvent, merge } = rxjs
 const { filter, map, scan, startWith } = rxjs.operators
@@ -23,7 +23,13 @@ const newGameAcions = fromEvent($newGameBtn, 'click').pipe(
   map(() => newGame)
 )
 
-const actions = merge(keyboardActions, newGameAcions)
+const $keepGoingBtn = document.querySelector('.keep-going')
+const keepGoingAcions = fromEvent($keepGoingBtn, 'click').pipe(
+  map(() => keepGoing)
+)
+
+
+const actions = merge(keyboardActions, newGameAcions, keepGoingAcions)
 
 const gameStates = actions.pipe(
   scan(nextState, initialState),

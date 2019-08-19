@@ -130,15 +130,20 @@ const mergeable = (tile1, tile2) =>
   tile1.value === tile2.value
 
 const nothingToMergeInRow = row =>
-  !mergeable(row[0], row[1]) &&
-  !mergeable(row[1], row[2]) &&
-  !mergeable(row[2], row[3])
+  indices(SIZE-1).every(i => !mergeable(row[i], row[i + 1]))
 
 const nothingToMerge = rows =>
   rows.every(nothingToMergeInRow) &&
   transpose(rows).every(nothingToMergeInRow)
 
+const has2048 = rows =>
+  rows.some(row =>
+    row.some(tile => !tile.empty && tile.value === 2048)
+  )
+
 const swipe = move => state => {
+  if (state.won && !state.keepGoing) return state
+
   const clearedRows = removeMergedIds(state.rows)
   const movedRows = move(clearedRows)
   if (nothingMoved(state.rows, movedRows)) return state
@@ -147,10 +152,13 @@ const swipe = move => state => {
   const rows = addTile(movedRows, rndTile(), rndPick(positions))
   const score = state.score + scoreFromMergedTiles(rows)
   const gameOver = emptyPositions(rows).length === 0 && nothingToMerge(rows)
+  const won = state.won || has2048(rows)
   return {
     rows,
     gameOver,
-    score
+    score,
+    won,
+    keepGoing: state.keepGoing
   }
 }
 
@@ -160,11 +168,15 @@ rows[0][0] = { value: 2, id: id++, mergedFrom: [] }
 const initialState = {
   rows,
   gameOver: false,
-  score: 0
+  score: 0,
+  won: false,
+  keepGoing: false
 }
 
 const newGame = () => initialState
 
+const keepGoing = state => ({ ...state, ...{ keepGoing: true }})
+
 const nextState = (state, action) => action(state)
 
-export { initialState, nextState, newGame, swipe, left, right, up, down, SIZE, not, empty, merged }
+export { initialState, nextState, newGame, keepGoing, swipe, left, right, up, down, SIZE, not, empty, merged }
